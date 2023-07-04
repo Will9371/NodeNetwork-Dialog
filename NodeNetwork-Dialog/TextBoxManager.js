@@ -3,11 +3,8 @@
     constructor(textBoxElement) 
     {
         this.textBoxElement = textBoxElement;
-        this.init();
-    }
+        console.log(this.textBoxElement === null);
 
-    init() 
-    {
         // Listen for the "modeChanged" event from the document
         document.addEventListener("modeChanged", this.handleModeChanged.bind(this));
     }
@@ -27,3 +24,5 @@
         }
     }
 }
+
+export { TextBoxManager };

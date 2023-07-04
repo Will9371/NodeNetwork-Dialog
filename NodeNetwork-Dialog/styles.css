@@ -12,15 +12,11 @@
     display: none; /* Hide the text box by default */
 }
 
+/* Show the text box when it has the "active" class */
 #text-box.active 
 {
-    display: flex; /* Show the text box when it has the "active" class */
-}
-
-#text-box label
-{
-    display: block;
-    margin-bottom: 5px;
+    display: flex; 
+    flex-direction: column;
 }
 
 #text-box textarea 
@@ -29,8 +25,7 @@
     height: calc(100% - 35px);
     padding: 5px;
     resize: none; /* Prevent resizing of the textarea */
-    /* Set text to be top-justified */
-    align-content: flex-start;
+    align-content: flex-start; /* Set text to be top-justified */
 }
 
 body 

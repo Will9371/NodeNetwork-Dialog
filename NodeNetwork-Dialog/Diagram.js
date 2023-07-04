@@ -144,7 +144,7 @@ class Diagram
 		}
 
 		// Raise the modeChange event with the new mode
-		const event = new CustomEvent("modeChange", { detail: { mode } });
+		const event = new CustomEvent("modeChanged", { detail: { mode } });
 		document.dispatchEvent(event);
 	}
 
