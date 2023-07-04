@@ -2,8 +2,13 @@
 <html>
 <head>
     <title>Moveable Circles</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script src="app.js" type="module" defer></script>
     <style>
-        body {
+        body 
+        {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -11,7 +16,8 @@
             margin: 0;
             position: relative;
         }
-        .circle {
+        .circle 
+        {
             width: 80px;
             height: 80px;
             background-color: #007bff; /* Blue color, you can change it to any color you like */
@@ -19,18 +25,22 @@
             position: absolute;
             z-index: 2; /* Ensure circles are on top of lines */
         }
-        .new-circle {
+        .new-circle 
+        {
             background-color: #007bff; /* Blue color for newly created circles */
         }
-        .following-circle {
+        .following-circle 
+        {
             background-color: aqua; /* Aqua color for circles that follow the mouse */
         }
-		.line {
+		.line 
+		{
 			position: absolute;
 			border-bottom: 2px solid black; /* Change this to set the line color */
 			z-index: 1; /* To place the lines underneath the circles */
 		}
-        #radio-container {
+        #radio-container 
+        {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -38,7 +48,8 @@
             flex-direction: column;
             z-index: 4; /* Ensure the radio buttons are on top */
         }
-        #overlay {
+        #overlay 
+        {
             position: absolute;
             top: 0;
             right: 0;
@@ -61,8 +72,13 @@
             <input type="radio" name="mode" value="connect"> [C] Connect
         </label>
     </div>
-    <div id="overlay"></div> <!-- Transparent overlay div -->
+    
+    <!-- Transparent overlay div -->
+    <div id="overlay"></div> 
 
-    <script src="app.js"></script> <!-- Link the JavaScript file -->
+    <!-- Link the JavaScript file -->
+    <script type="module" src="Diagram.js"></script>
+    <script type="module" src="Circle.js"></script>
+    <script type="module" src="Connection.js"></script>
 </body>
 </html>
