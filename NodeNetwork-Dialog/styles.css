@@ -1,0 +1,57 @@
+body 
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    position: relative;
+}
+
+.circle 
+{
+    width: 80px;
+    height: 80px;
+    background-color: #007bff; /* Blue color, you can change it to any color you like */
+    border-radius: 50%;
+    position: absolute;
+    z-index: 2; /* Ensure circles are on top of lines */
+}
+
+.new-circle 
+{
+    background-color: #007bff; /* Blue color for newly created circles */
+}
+
+.following-circle 
+{
+    background-color: aqua; /* Aqua color for circles that follow the mouse */
+}
+
+.line 
+{
+    position: absolute;
+    border-bottom: 2px solid black; /* Change this to set the line color */
+    z-index: 1; /* To place the lines underneath the circles */
+}
+
+#radio-container 
+{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    z-index: 4; /* Ensure the radio buttons are on top */
+}
+
+#overlay 
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px; /* Adjust this to cover the area around the radio buttons */
+    height: 100px; /* Adjust this to cover the area around the radio buttons */
+    background-color: rgba(200, 200, 200, 0.5); /* Transparent light grey */
+    z-index: 3; /* Make the overlay appear above circles, but below radio buttons */
+}

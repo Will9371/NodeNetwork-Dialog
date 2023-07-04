@@ -11,6 +11,7 @@ class Circle
 
 	createElement() 
 	{
+		//console.log("1");
 		const newCircle = document.createElement("div");
 		newCircle.classList.add("circle", "new-circle");
 		newCircle.style.left = this.x - 40 + "px"; // Half of the width 
