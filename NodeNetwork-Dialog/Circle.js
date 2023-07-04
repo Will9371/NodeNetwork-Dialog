@@ -4,7 +4,7 @@ class Circle
 	{
 		this.x = x;
 		this.y = y;
-		this.id = `circle_${circleCount}`;
+		this.id = `circle${circleCount}`;
 		this.element = this.createElement();
 		this.element.circleObject = this;
 	}

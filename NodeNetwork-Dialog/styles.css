@@ -1,10 +1,44 @@
+#text-box 
+{
+    position: absolute;
+    top: 10px;
+    left: 10px; /* Adjust the left value to control the distance from the left side */
+    background-color: rgba(200, 200, 200, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 3;
+    width: 20vw; /* 25% of the viewport width */
+    height: calc(100vh - 60px); /* 100% of the viewport height minus vertical padding */
+    display: none; /* Hide the text box by default */
+}
+
+#text-box.active 
+{
+    display: flex; /* Show the text box when it has the "active" class */
+}
+
+#text-box label
+{
+    display: block;
+    margin-bottom: 5px;
+}
+
+#text-box textarea 
+{
+    width: calc(100% - 10px);
+    height: calc(100% - 35px);
+    padding: 5px;
+    resize: none; /* Prevent resizing of the textarea */
+    /* Set text to be top-justified */
+    align-content: flex-start;
+}
+
 body 
 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    height: 10vh;
     position: relative;
 }
 
@@ -50,8 +84,8 @@ body
     position: absolute;
     top: 0;
     right: 0;
-    width: 150px; /* Adjust this to cover the area around the radio buttons */
-    height: 100px; /* Adjust this to cover the area around the radio buttons */
+    width: 140px; /* Adjust this to cover the area around the radio buttons */
+    height: 105px; /* Adjust this to cover the area around the radio buttons */
     background-color: rgba(200, 200, 200, 0.5); /* Transparent light grey */
     z-index: 3; /* Make the overlay appear above circles, but below radio buttons */
 }

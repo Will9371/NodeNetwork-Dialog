@@ -10,6 +10,7 @@ class Diagram
 		this.followCircle = null;
 		this.selectedCircle = null;
 		this.circleCount = 0;
+		this.connections = [];
 		
 		this.overlay = document.getElementById("overlay");
 		this.radioContainer = document.getElementById("radio-container");
@@ -18,19 +19,22 @@ class Diagram
 		// Prevent clicks on the overlay from affecting circles
 		overlay.addEventListener("mousedown", (e) => e.stopPropagation());
 
-		this.radioButtons.forEach((radio) =>
-		{
-			radio.addEventListener("change", (e) =>
-			{
-				currentMode = e.target.value;
-				if (selectedCircle)
-				{
-					selectedCircle.classList.remove("following-circle"); // Change circle color back to blue
-					selectedCircle = null;
-				}
-			});
-		});
+		this.radioButtons.forEach((radio) => 
+			{ radio.addEventListener("change", (e) => 
+				{ this.setCurrentMode(e.target.value);}); });
 	}
+
+	handleKeyDown = (e) =>
+	{
+		switch (e.key)
+		{
+			case "z": this.setCurrentMode("move"); break;
+			case "x": this.setCurrentMode("add_delete"); break;
+			case "c": this.setCurrentMode("connect"); break;
+			case "v": this.setCurrentMode("view"); break;
+			default: break;
+		}
+	};
 
 	handleMouseDown = (e) => 
 	{
@@ -50,17 +54,6 @@ class Diagram
 			this.followCircle.style.left = e.clientX - this.followCircle.clientWidth / 2 + "px";
 			this.followCircle.style.top = e.clientY - this.followCircle.clientHeight / 2 + "px";
 			this.updateLines(this.followCircle);
-		}
-	};
-
-	handleKeyDown = (e) =>
-	{
-		switch (e.key)
-		{
-			case "z": this.setCurrentMode("move"); break;
-			case "x": this.setCurrentMode("add_delete"); break;
-			case "c": this.setCurrentMode("connect"); break;
-			default: break;
 		}
 	};
 
@@ -96,7 +89,8 @@ class Diagram
 	addDeleteClick(e)
 	{
 		// Prevent circle creation when clicking inside the overlay or on radio buttons
-		if (e.target === overlay || e.target.parentElement === this.radioContainer || e.target.value === "move" || e.target.value === "connect")
+		if (e.target === overlay || e.target.parentElement === this.radioContainer 
+			|| e.target.value === "move" || e.target.value === "connect" || e.target.value === "view")
 			return;
 		
 		// Left-click on an existing circle to remove it
@@ -141,11 +135,17 @@ class Diagram
 		
 		if (selectedRadioButton)
 			selectedRadioButton.checked = true;
+			
+		// Change circle color back to blue	
 		if (this.selectedCircle)
 		{
 			this.selectedCircle.element.classList.remove("following-circle");
 			this.selectedCircle = null;
 		}
+
+		// Raise the modeChange event with the new mode
+		const event = new CustomEvent("modeChange", { detail: { mode } });
+		document.dispatchEvent(event);
 	}
 
 	updateLines(circle)
@@ -185,29 +185,44 @@ class Diagram
 
 	connectCircles(circle1, circle2) 
 	{
+		// If a connection already exists, remove it
+		if (this.removeConnection(circle1, circle2))
+			return;
+	
 		const connection = new Connection(circle1, circle2);
 
 		// Update the lines after connecting the circles
 		this.updateLines(circle1.element);
 		this.updateLines(circle2.element);
 
+		this.connections.push(connection);
 		return connection;
 	}
-
-	// Find an existing line between two circles (return null if none found)
-	findExistingLine(circle1, circle2)
-	{
-		const connectedLines = document.querySelectorAll(".line");
-		for (const line of connectedLines)
-		{
-			const lineCircle1 = document.getElementById(line.dataset.circle1);
-			const lineCircle2 = document.getElementById(line.dataset.circle2);
 	
-			if ((lineCircle1 === circle1 && lineCircle2 === circle2) ||
-				(lineCircle1 === circle2 && lineCircle2 === circle1))
-				return line;
+	removeConnection(circle1, circle2) 
+	{
+		const index = this.findConnectionIndex(circle1, circle2);
+		
+		if (index !== -1)
+		{
+			this.connections[index].remove();
+			this.connections.splice(index, 1);
 		}
-		return null;
+		return index !== -1;
+	}
+
+	findConnectionIndex(circle1, circle2)
+	{
+		let index = 0;
+		for (const connection of this.connections)
+		{
+			if (connection.circle1.id === circle1.id && connection.circle2.id == circle2.id ||
+				connection.circle1.id === circle2.id && connection.circle2.id === circle1.id)
+				return index;
+				
+			index++;
+		}
+		return -1;
 	}
 
 	// Delete lines connected to a circle
@@ -220,7 +235,7 @@ class Diagram
 			const lineCircle2 = document.getElementById(line.dataset.circle2);
 	
 			if (lineCircle1 === circle || lineCircle2 === circle)
-				line.remove();
+				this.removeConnection(lineCircle1, lineCircle2);
 		}
 	}
 }
