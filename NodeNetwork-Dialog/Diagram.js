@@ -13,7 +13,7 @@ class Diagram
 
 		// Prevent clicks on the overlay from affecting circles
 		this.overlay = document.getElementById("overlay");
-		overlay.addEventListener("mousedown", (e) => e.stopPropagation());
+		this.overlay.addEventListener("mousedown", (e) => e.stopPropagation());
 
 		// Listen to the modeChange event from ModeSelector
 		this.modeChangeHandler = this.handleModeChange.bind(this);
@@ -85,7 +85,7 @@ class Diagram
 	addDeleteClick(e)
 	{
 		// Prevent circle creation when clicking inside the overlay or on radio buttons
-		if (e.target === overlay || e.target.parentElement === this.radioContainer 
+		if (e.target === this.overlay || e.target.parentElement === this.radioContainer 
 			|| e.target.value === "move" || e.target.value === "connect" || e.target.value === "view")
 			return;
 		
@@ -201,7 +201,7 @@ class Diagram
 		let index = 0;
 		for (const connection of this.connections)
 		{
-			if (connection.sourceCircle.id === sourceCircle.id && connection.destinationCircle.id == destinationCircle.id ||
+			if (connection.sourceCircle.id === sourceCircle.id && connection.destinationCircle.id === destinationCircle.id ||
 				connection.sourceCircle.id === destinationCircle.id && connection.destinationCircle.id === sourceCircle.id)
 				return index;
 				

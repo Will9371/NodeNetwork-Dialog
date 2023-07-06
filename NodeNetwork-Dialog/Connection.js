@@ -98,25 +98,3 @@ class Connection
 }
 
 export { Connection };
-
-
-
-// Add data attributes to the line to store circle IDs
-//line.dataset.sourceCircle = this.sourceCircle.id;
-//line.dataset.destinationCircle = this.destinationCircle.id;
-
-/*line.element.style.left = x1 + "px";
-line.element.style.top = y1 + "px";
-line.element.style.width = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) + "px";
-line.element.style.transformOrigin = "left";
-line.element.style.transform = `rotate(${Math.atan2(y2 - y1, x2 - x1)}rad)`;*/
-
-/*
-    static calculateEdgePoint(x1, y1, x2, y2, circleRadius) 
-    {
-        const angle = Math.atan2(y2 - y1, x2 - x1);
-        const xAdjusted = x1 + Math.cos(angle) * circleRadius;
-        const yAdjusted = y1 + Math.sin(angle) * circleRadius;
-        return [xAdjusted, yAdjusted];
-    }
- */

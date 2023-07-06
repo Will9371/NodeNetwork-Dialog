@@ -20,6 +20,7 @@
                 case 'x': this.onModeChange("add_delete"); break;
                 case 'c': this.onModeChange("connect"); break;
                 case 'v': this.onModeChange("view"); break;
+                default: break;
             }
         });
     }
