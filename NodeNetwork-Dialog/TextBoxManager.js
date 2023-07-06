@@ -1,35 +1,42 @@
 ﻿export default class TextBoxManager 
 {
-    constructor(textBoxElement) 
+    constructor(textBox, inputText) 
     {
-        this.textBoxElement = textBoxElement;
+        this.textBox = textBox;
+        this.inputText = inputText;
+        this.selectedCircle = null;
 
         // Prevent clicks on the overlay from affecting circles
         this.overlay = document.getElementById("overlay");
         overlay.addEventListener("mousedown", (e) => e.stopPropagation());
-
-        document.addEventListener("modeChanged", this.handleModeChanged.bind(this));
+        
         document.addEventListener("selectionChanged", this.handleSelectionChanged.bind(this));
-    }
 
-    handleModeChanged(event) 
-    {
-        const mode = event.detail.mode;
-        //this.setActive(mode === "view")
+        // Prevent keybindings from being triggered when user is typing in the input field
+        this.inputText.addEventListener("keydown", (event) => { event.stopPropagation(); });
     }
     
     handleSelectionChanged(event)
     {
-        const circle = event.detail.selectedCircle;
-        this.setActive(circle !== null)
+        this.selectedCircle = event.detail.selectedCircle;
+        this.setActive(this.selectedCircle !== null)
+        
+        if (this.selectedCircle !== null)
+            this.inputText.value = this.selectedCircle.text;
     }
     
     setActive(value) 
     {
-        if (value) 
-            this.textBoxElement.classList.add("active");
+        if (value)
+            this.textBox.classList.add("active");
         else
-            this.textBoxElement.classList.remove("active");
+            this.textBox.classList.remove("active");
+    }
+
+    handleTextBoxChange(event) 
+    {
+        const newText = event.target.value; // get the new text data from the input field
+        this.selectedCircle.text = newText; // update the text data in the selected circle
     }
 }
 

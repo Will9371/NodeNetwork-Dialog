@@ -9,5 +9,7 @@ import { TextBoxManager } from '/TextBoxManager.js';
 document.addEventListener("DOMContentLoaded", () => 
 {
     const textBox = document.getElementById("text-box");
-    const textBoxManager = new TextBoxManager(textBox);
+    const textBoxInput = document.querySelector("#textbox-input");
+    const textBoxManager = new TextBoxManager(textBox, textBoxInput);
+    textBoxInput.addEventListener("input", textBoxManager.handleTextBoxChange.bind(textBoxManager));
 });
