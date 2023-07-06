@@ -89,6 +89,9 @@ body
 {
     width: 0;
     height: 0;
+    position: absolute;
+    top: -13px;
+    left: -11px;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-bottom: 12px solid #000; /* You can change the color of the arrowhead here */

@@ -1,4 +1,5 @@
 import { Circle } from './Circle.js';
+import { Vector } from './Vector.js';
 
 class Connection 
 {
@@ -47,8 +48,8 @@ class Connection
         const destinationRadius = line.destinationCircle.element.clientWidth / 2;
 
         // Calculate the coordinates of the points where the lines touch the circles
-        const [x1Adjusted, y1Adjusted] = Connection.offsetFrom(x2, y2, x1, y1, sourceRadius); 
-        const [x2Adjusted, y2Adjusted] = Connection.offsetFrom(x1, y1, x2, y2, destinationRadius); 
+        const [x1Adjusted, y1Adjusted] = Vector.offsetFrom(x2, y2, x1, y1, sourceRadius); 
+        const [x2Adjusted, y2Adjusted] = Vector.offsetFrom(x1, y1, x2, y2, destinationRadius); 
         
         const style = line.element.style;
         style.left = x1Adjusted + "px";
@@ -58,54 +59,9 @@ class Connection
         style.transform = `rotate(${Math.atan2(y2Adjusted - y1Adjusted, x2Adjusted - x1Adjusted)}rad)`;
         
         const arrowhead = line.element.querySelector(".arrowhead");
-        this.lookAt(arrowhead, x1, y1, x2, y2);
+        Vector.lookAt(arrowhead, x1, y1, x2, y2, -90);
     }
     
-    // Move to helper class
-    static lookAt(element, referenceX, referenceY, targetX, targetY)
-    {
-        // Calculate the angle between two points
-        const dx = targetX - referenceX;
-        const dy = targetY - referenceY;
-        const angle = Math.atan2(dy, dx);
-
-        // Convert the angle from radians to degrees
-        const angleInDegrees = angle * (180 / Math.PI);
-        const offset = -90;
-
-        // Apply rotation to the element
-        element.style.transform = `rotate(${angle + offset}deg)`;
-    }
-    
-    // Move to helper class
-    static offsetFrom(referenceX, referenceY, targetX, targetY, distance)
-    {
-        const dx = targetX - referenceX;
-        const dy = targetY - referenceY;
-        const [nx, ny] = Connection.normalize(dx, dy);
-        const x = targetX - (nx * distance);
-        const y = targetY - (ny * distance);
-        return [x, y];
-    }
-
-    // Move to helper class
-    static normalize(x, y) 
-    {
-        const length = Math.sqrt(x * x + y * y);
-        
-        if (length !== 0) 
-        {
-            const normalizedX = x / length;
-            const normalizedY = y / length;
-            return [normalizedX, normalizedY];
-        } 
-        else 
-        {
-            // Handle the case where the vector has zero length
-            return [0, 0];
-        }
-    }
-
     static requestSetEndpoints(connection, circle) 
     {
         const sourceCircle = connection.sourceCircle;
