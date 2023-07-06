@@ -52,7 +52,7 @@ body
     background-color: #007bff; /* Blue color for newly created circles */
 }
 
-.following-circle 
+.selected-circle 
 {
     background-color: aqua; /* Aqua color for circles that follow the mouse */
 }
@@ -83,4 +83,14 @@ body
     height: 105px; /* Adjust this to cover the area around the radio buttons */
     background-color: rgba(200, 200, 200, 0.5); /* Transparent light grey */
     z-index: 3; /* Make the overlay appear above circles, but below radio buttons */
+}
+
+.arrowhead 
+{
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 12px solid #000; /* You can change the color of the arrowhead here */
+    transform-origin: right center; /* Set the transform origin to the center of the arrowhead */
 }

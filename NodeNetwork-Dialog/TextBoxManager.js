@@ -3,25 +3,33 @@
     constructor(textBoxElement) 
     {
         this.textBoxElement = textBoxElement;
-        console.log(this.textBoxElement === null);
 
-        // Listen for the "modeChanged" event from the document
+        // Prevent clicks on the overlay from affecting circles
+        this.overlay = document.getElementById("overlay");
+        overlay.addEventListener("mousedown", (e) => e.stopPropagation());
+
         document.addEventListener("modeChanged", this.handleModeChanged.bind(this));
+        document.addEventListener("selectionChanged", this.handleSelectionChanged.bind(this));
     }
 
     handleModeChanged(event) 
     {
         const mode = event.detail.mode;
-
-        // Check if the mode is "view" and toggle the text box visibility accordingly
-        if (mode === "view") 
-        {
+        //this.setActive(mode === "view")
+    }
+    
+    handleSelectionChanged(event)
+    {
+        const circle = event.detail.selectedCircle;
+        this.setActive(circle !== null)
+    }
+    
+    setActive(value) 
+    {
+        if (value) 
             this.textBoxElement.classList.add("active");
-        } 
-        else 
-        {
+        else
             this.textBoxElement.classList.remove("active");
-        }
     }
 }
 

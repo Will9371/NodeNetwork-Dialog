@@ -1,3 +1,6 @@
+import { ModeSelector } from "./ModeSelector.js";
+document.addEventListener("DOMContentLoaded", () => { const modeSelector = new ModeSelector(); });
+
 import { Diagram } from './Diagram.js';
 const diagram = new Diagram();
 diagram.attachEventListeners();
